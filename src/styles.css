@@ -1,0 +1,173 @@
+.bg-azul{
+    background-color: rgb(0,98,204);
+}
+
+.btn-azul{
+    background-color: rgb(0,98,204);
+}
+
+.btn-rojo{
+    background-color: rgb(220,53,69);
+}
+
+.bg-rojo{
+    background-color: rgb(220,53,69);
+}
+
+.btn-verde{
+    background-color: rgb(40,167,69);
+}
+
+.bg-verde{
+    background-color: rgb(40,167,69);
+}
+
+.btn-amarillo{
+    background-color: rgb(255,193,7);
+}
+
+.bg-amarillo{
+    background-color: rgb(255,193,7);
+}
+
+.btn-primavera-lila{
+    background-color: rgb(188,165,204);
+}
+
+.bg-primavera-lila{
+    background-color: rgb(188,165,204);
+}
+
+.btn-fuego-violeta{
+    background-color: rgb(116,86,140);
+}
+
+.bg-fuego-violeta{
+    background-color: rgb(116,86,140);
+}
+
+.btn-fuego-violeta{
+    background-color: rgb(116,86,140);
+}
+
+.bg-fuego-violeta{
+    background-color: rgb(116,86,140);
+}
+
+.btn-bouquet-de-lilas{
+    background-color: rgb(189,187,218);
+}
+
+.bg-bouquet-de-lilas{
+    background-color: rgb(189,187,218);
+}
+
+.btn-mochaccino{
+    background-color: rgb(214,194,183);
+}
+
+.bg-mochaccino{
+    background-color: rgb(214,194,183);
+}
+
+.btn-asperula{
+    background-color: rgb(166,143,126);
+}
+
+.bg-asperula{
+    background-color: rgb(166,143,126);
+}
+
+.btn-campos-irlandeses{
+    background-color: rgb(152,179,62);
+}
+
+.bg-campos-irlandeses{
+    background-color: rgb(152,179,62);
+}
+
+.btn-campos-salvia-victoriana{
+    background-color: rgb(0,124,92);
+}
+
+.bg-campos-salvia-victoriana{
+    background-color: rgb(0,124,92);
+}
+
+.btn-cielo-de-angeles{
+    background-color: rgb(179,214,220);
+}
+
+.bg-cielo-de-angeles{
+    background-color: rgb(179,214,220);
+}
+
+.btn-alas-de-colibri{
+    background-color: rgb(0,84,130);
+}
+
+.bg-alas-de-colibri{
+    background-color: rgb(0,84,130);
+}
+
+.btn-destino{
+    background-color: rgb(224,137,156);
+}
+
+.bg-destino{
+    background-color: rgb(224,137,156);
+}
+
+.btn-rubi-estridente{
+    background-color: rgb(166,39,47);
+}
+
+.bg-rubi-estridente{
+    background-color: rgb(166,39,47);
+}
+
+.btn-mandarina-deliciosa{
+    background-color: rgb(230,141,90);
+}
+
+.bg-mandarina-deliciosa{
+    background-color: rgb(230,141,90);
+}
+
+.btn-sensacion-estival{
+    background-color: rgb(250,213,135);
+}
+
+.bg-sensacion-estival{
+    background-color: rgb(250,213,135);
+}
+
+.btn-sabor-limon{
+    background-color: rgb(252,228,98);
+}
+
+.bg-sabor-limon{
+    background-color: rgb(252,228,98);
+}
+
+.btn-degrade-lu{
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+.bg-degrade-lu{
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+.btn-degrade-mati{
+    background: #642B73;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #C6426E, #642B73);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #C6426E, #642B73); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.bg-degrade-mati{
+    background: #642B73;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #C6426E, #642B73);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #C6426E, #642B73); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
