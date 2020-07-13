@@ -65,7 +65,7 @@
             </div>
             <small
               class="col-12 my-0 form-text text-muted"
-            >Mínimo seis caracteres entre ellos una mayuscula, una minuscula y un número</small>
+            >Mínimo seis caracteres</small>
           </div>
           <hr />
           <div class="form-group">
@@ -80,6 +80,7 @@
 
 <script>
 const fb = require('@/firebase')
+import firebase from 'firebase'
 
 export default {
     name: "SignUp",
@@ -185,8 +186,15 @@ export default {
                             displayName: this.email.split('@')[0]
                         });
                         // this.$store.commit('setCurrentUser', userFir.user)
-                        fb.currentUser.sendEmailVerification();
-                        fb.auth.signOut;
+                        firebase.auth().currentUser.sendEmailVerification();
+                         fb.auth.signOut().then(() => {
+                          this.$store.dispatch('clearData')
+                          if(this.$route.name!='Home'){
+                            this.$router.push({name:'Home'})
+                          }
+                        }).catch(err => {
+                          console.log(err)
+                        })
                         fb.usersCollection.doc(this.email.split('@')[0]).set(user)
                         // .then(() => {
                         //     this.$store.dispatch('fetchFbProfile')

@@ -2,9 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Profile from '@/views/Profile.vue'
+import Chat from '@/views/Chat.vue'
 import About from '@/views/About.vue'
+import News from '@/views/News.vue'
 import Search from '@/views/Search.vue'
-import Explore from '@/views/Explore.vue'
 
 Vue.use(VueRouter)
 
@@ -21,14 +22,24 @@ const router = new VueRouter({
       component: About
     },
     {
-      path: '/Explorar',
-      name: 'Explore',
-      component: Explore
+      path: '/Novedades',
+      name: 'News',
+      component: News
     },
     {
       path: '/Buscar',
       name: 'Search',
       component: Search
+    },
+    {
+      path: '/Chat',
+      name: 'Chat',
+      component: Chat
+    },
+    {
+      path: '/Chat/:userId',
+      name: 'ChatView',
+      component: Chat
     },
     {
       path: '/:userId',

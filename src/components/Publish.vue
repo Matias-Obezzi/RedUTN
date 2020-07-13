@@ -5,10 +5,13 @@
                 {{getPublishShow()}}
             </template>
             <div v-if="read">
+                <div v-if="$route.name=='Home' && user">
+                    <CreatePublish :user="user" v-if="user" v-on:reload="reload" />
+                </div>
                 <div v-if="publishShow">
-                    <div class="my-3 mx-auto col-12" :class="{'col-md-10': !userView}" v-if="userView">
-                        <div class="rounded" :class="userView.color.all">
-                            <button class="btn py-0 bg-transparent mx-auto col"  :class="userView.color.text" v-on:click="likeFilterAction()">
+                    <div class="my-3 mx-auto col-12" :class="{'col-md-10': $route.name=='Home'}">
+                        <div class="rounded mx-auto row col-md-10 col-lg px-2">
+                            <button class="btn p-0 col bg-dark text-light" :class="{'mr-2':userView}" v-on:click="likeFilterAction()" v-if="userView">
                                 <template v-if="!offLikes">
                                     <i class="fas fa-heart-broken"></i>
                                     Ocultar
@@ -36,6 +39,9 @@
                                             <a class="align-middle">{{getUser(pub.author).username}}</a>
                                         </router-link>
                                     </p>
+                                    <button class="btn ml-auto p-0" :class="getUser(pub.author).color.text" v-if="user && (user.role=='admin' || pub.author==user.id)" @click="deletePub(pub)">
+                                        <b-icon icon="trash"></b-icon>
+                                    </button>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text" :class="getUser(pub.author).color.text">{{pub.message}}</p>
@@ -80,11 +86,25 @@
 </template>
 
 <script>
+import CreatePublish from '@/components/CreatePublish.vue'      
 import $ from 'jquery'
 const fb = require('@/firebase')
 export default {
     name: 'Publish',
-    props:['user', 'usersList', 'publish', 'userView', 'isExplore'],
+    props:['user', 'usersList', 'publish', 'userView'],
+    components:{
+        CreatePublish,
+    },
+    watch: {
+        publish(newVal, oldVal){
+            if(newVal[0] && newVal.length !== oldVal.length){
+                this.getPublishShow()
+            }
+        },
+        usersList(){
+            
+        }
+    },
     data(){
         return{
             dot: '.',
@@ -100,9 +120,43 @@ export default {
         })
     },
     methods:{
+        reload(){
+            setTimeout(this.getPublishShow(), 2000);
+        },
+        deletePub(publication) {
+            if(confirm("La publicacion\n" + publication.message + "\nestá por ser eliminada\nDesea continuar?")){
+                console.log("deleted")
+                publication.like.forEach(function(user) {
+                    fb
+                    .usersCollection
+                    .doc(user)
+                    .update({
+                        likes: fb.fieldValue.arrayRemove(publication.id)
+                    });
+                });
+                fb
+                .usersCollection
+                .doc(publication.author)
+                .update({
+                    pubCount: fb.fieldValue.increment(-1)
+                });
+                fb
+                .publishCollection
+                .doc(publication.id)
+                .delete()
+                .then(function() {
+                    console.log("Eliminada con éxito");
+                })
+                .catch(function(error) {
+                    console.log(error.message);
+                });
+                // this.$store.dispatch('setPublish');
+                this.reload();
+            }
+        },
         likeFilterAction(){
             this.offLikes = !this.offLikes;
-            this.getPublishShow()
+            this.getPublishShow();
         },
         likeAction(pub){
             var index = pub.like.indexOf(this.user.id);
@@ -128,22 +182,21 @@ export default {
             return this.$route.name=='Profile' && (el.author == this.userView.id || (!this.offLikes && el.like != [] && el.like.indexOf(this.userView.id)!=-1))
         },
         isHome(el){
-            let user = this.user;
-            return this.$route.name=='Home' && (!user || (el.author==user.id || user.follows.indexOf(el.author)!=-1))
+            return this.$route.name=='Home' && (!this.user || el.author==this.user.id ||  (this.user.follows?this.user.follows.indexOf(el.author)!=-1:false))
         },
         getPublishShow(){
-            var temp = this.publish.filter(el =>{
-                return this.isProfile(el) || this.isHome(el) || this.isExplore
+            this.publishShow=[];
+            this.publishShow = this.publish.filter(el =>{
+                return this.isHome(el) || this.isProfile(el) || this.$route.name=="Search"
             })
-            this.publishShow = temp
             this.read=true
         },
         dots(){
             setTimeout(()=>{
                 if(this.dot=="..."){
-                this.dot=".";
+                    this.dot=".";
                 }else{
-                this.dot+=".";
+                    this.dot+=".";
                 }
             }, 500)
             return this.dot;

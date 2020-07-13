@@ -2,8 +2,10 @@
   <div id="app" class="mx-auto row container-fluid px-0">
     <template v-if="publish && usersList">
       <Navigation class="col-12 col-lg-2 px-0 mx-0" id="navigation" :user="user" :usersList="usersList" />
-      <div id="content" class="col mx-auto p-2 mb-5 mb-lg-2">
-        <router-view class="text-center" :usersList="usersList" :publish="publish" :user="user" :key="$route.path" />
+      <div id="content" class="col mx-auto p-2 mb-5 mb-lg-2" :class="{'my-auto':$route.name=='About'}">
+        <vue-page-transition name="fade">
+          <router-view class="text-center" :usersList="usersList" :publish="publish" :user="user" :key="$route.path" :news="news" :chats="chats" />
+        </vue-page-transition>
       </div>
     </template>
     <template v-else>
@@ -37,7 +39,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['user', 'usersList', 'publish', 'hiddenPublish', 'fbUser'])
+    ...mapState(['user', 'usersList', 'publish', 'hiddenPublish', 'fbUser', 'news', 'chats'])
   },
   methods:{
     dots(){
@@ -77,9 +79,10 @@ export default {
   margin: auto;
   width: 70px;
   height: 70px;
-  border: 10px solid #eee;
-  border-top: 10px solid #030303;
-  border-radius: 50%;
+  border: 10px solid #121212;
+  border-top: 10px solid rgba(255,255,255,0.1);
+  border-bottom: 10px solid rgba(255,255,255,0.1);
+  border-radius: 100%;
   animation-name: girar;
   animation-duration: 2s;
   animation-iteration-count: infinite;

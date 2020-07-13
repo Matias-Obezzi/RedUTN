@@ -7,8 +7,7 @@
             <div class="container pt-5" v-if="userInView">
                 <div class="rounded p-3 shadow" :class="userInView.color.all">
                     <div class="row mx-auto">
-                        <div class="col-lg-4 col-12 order-4 order-lg-1 row mx-auto py-2">
-                            <hr class="col-12 bg-light d-block d-lg-none">
+                        <div class="col-lg-4 col-12 order-4 order-lg-1 row mx-auto py-2 text-center">
                             <div class="col-4 mx-auto my-auto text-center">
                                 <p class="my-0 mx-auto">
                                     <i class="fas fa-users"></i> {{userInView.followers?userInView.followers.length:0}}
@@ -29,15 +28,14 @@
                                     <i class="fas fa-calendar"></i> {{userInView.time}}
                                 </p>
                             </div>
-                            <hr class="col-12 bg-light d-block d-lg-none">
                         </div>
                         <div class="col-lg-4 col-12 order-1 order-lg-2 row mx-auto">
                             <div class="col-1" v-if="(userInView.role=='coadmin' || userInView.role=='admin') && mobile"></div>
-                            <div class="col">
+                            <div class="col mx-auto justify-content-center">
                                 <img class="mx-auto d-block img-fluid rounded-circle profileImg" :class="userInView.color.all" :src="userInView.avatar?userInView.avatar:'/favicon.png'" alt="">
                             </div>
-                            <i class="fas fa-check-circle mx-2 align-top col-1" :class="userInView.color.text" style="font-size:25px" v-if="userInView.role=='coadmin' && mobile" data-toggle="tooltip" data-placement="right" title="Coadmin"></i>
-                            <i class="fas fa-user-astronaut mx-2 align-top col-1" :class="userInView.color.text" style="font-size:25px" v-else-if="userInView.role=='admin' && mobile" data-toggle="tooltip" data-placement="right" title="Admin"></i>
+                            <i class="fas fa-check-circle align-top col-1" :class="userInView.color.text" style="font-size:25px" v-if="userInView.role=='coadmin' && mobile" data-toggle="tooltip" data-placement="right" title="Coadmin"></i>
+                            <i class="fas fa-user-astronaut align-top col-1" :class="userInView.color.text" style="font-size:25px" v-else-if="userInView.role=='admin' && mobile" data-toggle="tooltip" data-placement="right" title="Admin"></i>
                         </div>
                         <div class="col-lg-4 col-12 order-5 order-lg-3 my-2">
                             <div class="row mx-auto text-center pt-2">
@@ -48,7 +46,7 @@
                                     Cerrar sesión
                                 </button>
                                 <button class="btn py-0 bg-transparent border mx-auto col my-auto" :class="userInView.color.text" v-on:click="followAction(userInView.id)" v-if="user && userInView.id!=user.id">
-                                    <template v-if="user.follows.indexOf(userInView.id)==-1">
+                                    <template v-if="!user.follows || user.follows.indexOf(userInView.id)==-1">
                                         <i class="fas fa-user-plus"></i>
                                         Seguir
                                     </template>
@@ -116,7 +114,7 @@ export default {
     methods:{
         followAction(userClick){
             var userTemp = this.user;
-            var index = this.user.follows.indexOf(userClick);
+            var index = userTemp.follows?this.user.follows.indexOf(userClick):-1;
             if(index!=-1){
                 fb.usersCollection.doc(this.user.id).update({
                     follows: fb.fieldValue.arrayRemove(userClick)

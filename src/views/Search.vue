@@ -3,13 +3,13 @@
         <template v-if="!usersShow && usersList">
             {{filterUsers()}}
         </template>
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 mx-auto ml-lg-2 mt-4 px-2">
             <div class="row mx-auto bg-light rounded-pill">
                 <b-icon-at font-scale="1.25" class="my-auto ml-2 px-0"></b-icon-at>
                 <input type="text" class="form-control rounded-pill pl-1 text-dark border-0 col px-0" v-model="input" v-on:input="filterUsers" placeholder="Usuario interno">
             </div>
         </div>
-        <div class="container row row-cols-2 row-cols-lg-3 mx-auto my-1">
+        <div class="container row row-cols-2 row-cols-lg-3 mx-auto my-1" v-if="usersShow">
             <router-link :to="{name:'Profile', params:{userId:u.id}}" class="col p-1" v-for="u in usersShow" :key="u.id">
                 <div class="rounded border-0" :class="u.color.all">
                     <div class="row no-gutters">
@@ -47,15 +47,18 @@
                 Realizá una busqueda y veamos que aparece 😁
             </div>
         </div>
+        <Publish :usersList="usersList" :user="user" :publish="publish" v-else />
     </div>
 </template>
 
 <script>
+import Publish from '@/components/Publish.vue'
 import $ from 'jquery'
 export default {
     name:'Search',
-    props:['usersList','user'],
-    mounted(){
+    props:['usersList','user', 'publish'],
+    components:{
+        Publish
     },
     data(){
         return{
@@ -66,11 +69,9 @@ export default {
     methods:{
         filterUsers(){
             var search = this.input
-            var user = this.user
-            if(user){
-                this.usersShow = search?this.usersList.filter(el=> (search && el.id.indexOf(search)!=-1)):this.usersList.filter(el=> el.followers && el.followers.indexOf(user.id)!=-1)
-            }else{
-                this.usersShow=this.usersList
+            this.usersShow = search?this.usersList.filter(el=> (search && el.id.indexOf(search)!=-1)):null
+            if(!this.usersShow){
+                this.router
             }
             this.setToolTip();
         },
